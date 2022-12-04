@@ -7,7 +7,7 @@ orbs:
 jobs:
   go-build:
     docker:
-      - image: golang:1.19-alpine3.17
+      - image: cimg/go:1.19.0
     steps:
       - checkout
       - run:
