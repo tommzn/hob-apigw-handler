@@ -1,5 +1,5 @@
 [![Actions Status](https://github.com/tommzn/hob-apigw-handler/actions/workflows/go.image.build.yml/badge.svg)](https://github.com/tommzn/hob-apigw-handler/actions)
-[![CircleCI](https://circleci.com/gh/tommzn/hob-apigw-handler/tree/main.svg?style=svg)](https://circleci.com/gh/tommzn/hob-apigw-handler/tree/main)
+![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/tommzn/hob-timetracker)
 
 # HomeOffice Button - API Gateway Request Handler
 A handler to process time tracking requests from AWS API Gateway.  
