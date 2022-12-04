@@ -19,10 +19,8 @@ jobs:
           go-version: ${{ env.goversion }}
       - name: Run tests
         run: go test -v  -covermode=count ./...
-        working-directory: ./lambda
       - name: Build Binary
         run: CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -v -o build_artifact_bin
-        working-directory: ./lambda
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
