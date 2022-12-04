@@ -45,13 +45,13 @@ workflows:
       - go-build:
           filters:
             tags:
-              only: /^lambda\/v[0-9]+(\.[0-9]+)*$/
+              only: /^v[0-9]+(\.[0-9]+)*$/
             branches:
               only: main
       - ecr-build-and-deploy:
           filters:
             tags:
-              only: /^lambda\/v[0-9]+(\.[0-9]+)*$/
+              only: /^v[0-9]+(\.[0-9]+)*$/
             branches:
               only: main
           requires:
@@ -61,7 +61,7 @@ workflows:
             branches:
               ignore: /.*/
             tags:
-              only: /^lambda\/v[0-9]+(\.[0-9]+)*$/
+              only: /^v[0-9]+(\.[0-9]+)*$/
           requires:
             - ecr-build-and-deploy
           
