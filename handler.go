@@ -19,6 +19,7 @@ func newRequestHandler(timeTracker timetracker.TimeTracker, logger log.Logger) *
 func (handler *APIGatewayRequestHandler) Process(ctx context.Context, timeTrackingRecord TimeTrackingRecord) error {
 
 	handler.logger.WithContext(ctx)
+	handler.logger.Debugf("TimeTrackingRecord: %+v", timeTrackingRecord)
 	handler.logger.Statusf("Receive capture request (%s) from %s at %s", timeTrackingRecord.ClickType, timeTrackingRecord.DeviceId, timeTrackingRecord.Timestamp)
 
 	var err error
