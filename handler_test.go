@@ -1,8 +1,11 @@
 package main
 
 import (
+	"encoding/json"
 	"testing"
 	"time"
+
+	"github.com/aws/aws-lambda-go/events"
 
 	"github.com/stretchr/testify/suite"
 	log "github.com/tommzn/go-log"
@@ -22,16 +25,28 @@ func (suite *HandlerTestSuite) TestProcessRequests() {
 	handler := handlerForTest()
 	record := TimeTrackingRecord{DeviceId: "Device01", ClickType: SINGLE_CLICK}
 
-	suite.Nil(handler.Process(record))
+	res1, err1 := handler.Process(suite.requestForTest(record))
+	suite.Nil(err1)
+	suite.Equal(200, res1.StatusCode)
+
 	now := time.Now()
 	record.Timestamp = &now
-	suite.Nil(handler.Process(record))
+	res2, err2 := handler.Process(suite.requestForTest(record))
+	suite.Nil(err2)
+	suite.Equal(200, res2.StatusCode)
 }
+
 func (suite *HandlerTestSuite) TestConvertClickType() {
 
 	suite.Equal(timetracker.WORKDAY, toTimeTrackingRecordType(SINGLE_CLICK))
 	suite.Equal(timetracker.ILLNESS, toTimeTrackingRecordType(DOUBLE_CLICK))
 	suite.Equal(timetracker.VACATION, toTimeTrackingRecordType(LONG_PRESS))
+}
+
+func (suite *HandlerTestSuite) requestForTest(record TimeTrackingRecord) events.APIGatewayProxyRequest {
+	content, err := json.Marshal(record)
+	suite.Nil(err)
+	return events.APIGatewayProxyRequest{Body: string(content)}
 }
 
 func handlerForTest() *APIGatewayRequestHandler {
