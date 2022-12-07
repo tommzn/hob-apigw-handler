@@ -29,7 +29,7 @@ type TimeTrackingRecord struct {
 	DeviceId string `json:"deviceid`
 
 	// Type of a time tracking event.
-	ClickType IotClickType `json:"clicktyoe"`
+	ClickType IotClickType `json:"clicktype"`
 
 	// Timestamp is the point in time a time tracking event has occured.
 	Timestamp *time.Time `json:"timestamp,omitempty"`
