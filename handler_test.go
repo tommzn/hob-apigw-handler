@@ -1,7 +1,6 @@
 package main
 
 import (
-	"context"
 	"testing"
 	"time"
 
@@ -23,10 +22,10 @@ func (suite *HandlerTestSuite) TestProcessRequests() {
 	handler := handlerForTest()
 	record := TimeTrackingRecord{DeviceId: "Device01", ClickType: SINGLE_CLICK}
 
-	suite.Nil(handler.Process(context.Background(), record))
+	suite.Nil(handler.Process(record))
 	now := time.Now()
 	record.Timestamp = &now
-	suite.Nil(handler.Process(context.Background(), record))
+	suite.Nil(handler.Process(record))
 }
 func (suite *HandlerTestSuite) TestConvertClickType() {
 

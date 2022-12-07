@@ -1,8 +1,6 @@
 package main
 
 import (
-	"context"
-
 	log "github.com/tommzn/go-log"
 	timetracker "github.com/tommzn/hob-timetracker"
 )
@@ -16,11 +14,10 @@ func newRequestHandler(timeTracker timetracker.TimeTracker, logger log.Logger) *
 }
 
 // Process will process time tracking request and persist it using time tracker repository.
-func (handler *APIGatewayRequestHandler) Process(ctx context.Context, timeTrackingRecord TimeTrackingRecord) error {
+func (handler *APIGatewayRequestHandler) Process(timeTrackingRecord TimeTrackingRecord) error {
 
 	defer handler.logger.Flush()
 
-	handler.logger.WithContext(ctx)
 	handler.logger.Debugf("TimeTrackingRecord: %+v", timeTrackingRecord)
 	handler.logger.Statusf("Receive capture request (%s) from %s at %s", timeTrackingRecord.ClickType, timeTrackingRecord.DeviceId, timeTrackingRecord.Timestamp)
 
