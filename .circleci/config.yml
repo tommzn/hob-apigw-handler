@@ -37,6 +37,12 @@ jobs:
       - run: 
           name: Update Lambda Function Image
           command: aws lambda update-function-code --region $AWS_REGION --function-name $AWS_LAMBDA_FUNCTION --image-uri ${AWS_ECR_ACCOUNT_URL}/${AWS_ECR_REPOSITORY}:latest
+  notify:
+    machine:
+      image: ubuntu-2004:202101-01
+    steps:
+      - slack/notify:
+          template: success_tagged_deploy_1
 
 workflows:
   version: 2
@@ -64,4 +70,14 @@ workflows:
               only: /^v[0-9]+(\.[0-9]+)*$/
           requires:
             - ecr-build-and-deploy
+      - notify: 
+          context: slack-secrets
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v[0-9]+(\.[0-9]+)*$/
+          requires:
+            - lambda-func-update
+          
           
