@@ -25,6 +25,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: build_artifact_bin
+          path: build_artifact_bin
           retention-days: 1
         
   image-build:
