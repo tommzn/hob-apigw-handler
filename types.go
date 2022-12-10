@@ -14,6 +14,10 @@ const (
 	SINGLE_CLICK IotClickType = "SINGLE"
 	DOUBLE_CLICK IotClickType = "DOuBLE"
 	LONG_PRESS   IotClickType = "LONG_PRESS"
+
+	WORKDAY  IotClickType = "WORKDAY"
+	ILLNESS  IotClickType = "ILLNESS"
+	VACATION IotClickType = "VACATION"
 )
 
 // APIGatewayRequestHandler process and persist captured request for time tracking records.
