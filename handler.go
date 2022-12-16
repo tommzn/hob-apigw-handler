@@ -51,11 +51,11 @@ func (handler *APIGatewayRequestHandler) Process(request events.APIGatewayProxyR
 // ToTimeTrackingRecordType converts a AWS IOT click type to a time tracking record type.
 func toTimeTrackingRecordType(clickType IotClickType) timetracker.RecordType {
 	switch clickType {
-	case SINGLE_CLICK, WORKDAY:
+	case SINGLE_CLICK:
 		return timetracker.WORKDAY
-	case DOUBLE_CLICK, ILLNESS:
+	case DOUBLE_CLICK:
 		return timetracker.ILLNESS
-	case LONG_PRESS, VACATION:
+	case LONG_PRESS:
 		return timetracker.VACATION
 	default:
 		return timetracker.WORKDAY
