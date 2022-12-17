@@ -21,6 +21,8 @@ func (handler *APIGatewayRequestHandler) Process(request events.APIGatewayProxyR
 
 	defer handler.logger.Flush()
 
+	handler.logger.Debug("Requested resource: %s, path: %s", request.Resource, request.Path)
+
 	timeTrackingRecord, err := toTimeTrackingRecord(request.Body)
 	if err != nil {
 		return events.APIGatewayProxyResponse{
