@@ -210,6 +210,8 @@ github.com/tmc/grpc-websocket-proxy v0.0.0-20190109142713-0ad062ec5ee5/go.mod h1
 github.com/tommzn/go-config v1.0.1/go.mod h1:K+ta7gkX32lSS+6tIIH9ttuhr35tV4AMAzOC640aRKE=
 github.com/tommzn/go-config v1.0.5 h1:fhXq5rVvONUKDq/zmFvHWq2r/1CjaQ9WsYiHyOnvaD8=
 github.com/tommzn/go-config v1.0.5/go.mod h1:K+ta7gkX32lSS+6tIIH9ttuhr35tV4AMAzOC640aRKE=
+github.com/tommzn/go-config v1.1.0 h1:PDQTmlcHzlVDLuBI3GsxhnrVFCQRakAdknm4oOhlZuQ=
+github.com/tommzn/go-config v1.1.0/go.mod h1:K+ta7gkX32lSS+6tIIH9ttuhr35tV4AMAzOC640aRKE=
 github.com/tommzn/go-log v1.2.2 h1:SL6B9lbgYYtH4GUorNS3OgSRvVEErRyq73c9loNyXXg=
 github.com/tommzn/go-log v1.2.2/go.mod h1:tdvg4YMb2HeTYIl2LS/089jdNGnFQTmgXICGnBt0dh4=
 github.com/tommzn/go-secrets v1.1.2 h1:OTjPeXtRMMxjO4HZAmfNeSWCXzo4wFczSYveDeuz+QA=
@@ -222,6 +224,8 @@ github.com/tommzn/hob-timetracker v1.0.2 h1:WJRlPubtUewT2CK4SmJ/VjfojogCSrDXy9Yh
 github.com/tommzn/hob-timetracker v1.0.2/go.mod h1:Ibs+8k7LiTqGOxDqxskNcNDxjJ4ezeXPu/cJ0VbMHe0=
 github.com/tommzn/hob-timetracker v1.0.3 h1:ibCCDjzWEG36QHSYcCtlShCAZ/5gMWfoUQ8wxx120b8=
 github.com/tommzn/hob-timetracker v1.0.3/go.mod h1:Ibs+8k7LiTqGOxDqxskNcNDxjJ4ezeXPu/cJ0VbMHe0=
+github.com/tommzn/hob-timetracker v1.1.1 h1:++zjSK0po23FDZS8mtnElSO9jiQJ8XBoFmHShZG/CnM=
+github.com/tommzn/hob-timetracker v1.1.1/go.mod h1:Ibs+8k7LiTqGOxDqxskNcNDxjJ4ezeXPu/cJ0VbMHe0=
 github.com/xiang90/probing v0.0.0-20190116061207-43a291ad63a2/go.mod h1:UETIi67q53MR2AWcXfiuqkDkRtnGDLqkBTpCHuJHxtU=
 github.com/xuri/efp v0.0.0-20220603152613-6918739fd470 h1:6932x8ltq1w4utjmfMPVj09jdMlkY0aiA6+Skbtl3/c=
 github.com/xuri/efp v0.0.0-20220603152613-6918739fd470/go.mod h1:ybY/Jr0T0GTCnYjKqmdwxyxn2BQf2RcQIIvex5QldPI=

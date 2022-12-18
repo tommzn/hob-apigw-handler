@@ -43,7 +43,13 @@ type CaptureRequestHandler struct {
 
 // ReportGenerateRequestHandler will process request to generate and publish monthly time tracking reports.
 type ReportGenerateRequestHandler struct {
-	logger log.Logger
+	logger      log.Logger
+	deviceIds   []string
+	timeTracker timetracker.TimeTracker
+	calculator  timetracker.ReportCalculator
+	formatter   timetracker.ReportFormatter
+	publisher   timetracker.ReportPublisher
+	calendar    timetracker.Calendar
 }
 
 // TimeTrackingReport os a single captured time tracking event.
@@ -70,4 +76,9 @@ type ReportGenerateRequest struct {
 
 	// Month a monthly report should be generated for.
 	Month int `json:"month`
+}
+
+// AwsConfig used for different AWS clients.
+type awsConfig struct {
+	region, bucket, basePath *string
 }

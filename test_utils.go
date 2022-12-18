@@ -4,6 +4,7 @@ import (
 	"errors"
 
 	"github.com/aws/aws-lambda-go/events"
+	config "github.com/tommzn/go-config"
 	log "github.com/tommzn/go-log"
 )
 
@@ -30,4 +31,11 @@ func (mock *handlerMock) Process(request events.APIGatewayProxyRequest) (events.
 		}, err
 	}
 	return events.APIGatewayProxyResponse{StatusCode: 200}, nil
+}
+
+func configForTest() config.Config {
+	configFile := "fixtures/testconfig.yml"
+	configLoader := config.NewFileConfigSource(&configFile)
+	config, _ := configLoader.Load()
+	return config
 }
