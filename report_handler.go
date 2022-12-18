@@ -74,5 +74,5 @@ func toReportGenerateRequest(requestBody string) (ReportGenerateRequest, error) 
 // ReportTimeRange generates first amd last day for report time range.
 func reportTimeRange(year, month int) (time.Time, time.Time) {
 	firstOfThisMonth := time.Date(year, time.Month(month), 1, 0, 0, 0, 0, time.UTC)
-	return firstOfThisMonth.AddDate(0, -1, 0), firstOfThisMonth.Add(-1 * time.Second)
+	return firstOfThisMonth, firstOfThisMonth.AddDate(0, 1, 0).Add(-1 * time.Second)
 }
