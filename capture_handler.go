@@ -9,26 +9,20 @@ import (
 )
 
 // NewRequestHandler create a handler to process API Gateway requests.
-func newRequestHandler(timeTracker timetracker.TimeTracker, logger log.Logger) *APIGatewayRequestHandler {
-	return &APIGatewayRequestHandler{
+func newCaptureRequestHandler(timeTracker timetracker.TimeTracker, logger log.Logger) *CaptureRequestHandler {
+	return &CaptureRequestHandler{
 		logger:      logger,
 		timeTracker: timeTracker,
 	}
 }
 
 // Process will process time tracking request and persist it using time tracker repository.
-func (handler *APIGatewayRequestHandler) Process(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
-
-	defer handler.logger.Flush()
-
-	handler.logger.Debug("Requested resource: %s, path: %s", request.Resource, request.Path)
+func (handler *CaptureRequestHandler) Process(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 
 	timeTrackingRecord, err := toTimeTrackingRecord(request.Body)
 	if err != nil {
-		return events.APIGatewayProxyResponse{
-			StatusCode: 400,
-			Body:       "Unable to decode request body",
-		}, err
+		handler.logger.Error(err)
+		return errorResponse(err), err
 	}
 
 	handler.logger.Debugf("TimeTrackingRecord: %+v", timeTrackingRecord)
@@ -41,13 +35,11 @@ func (handler *APIGatewayRequestHandler) Process(request events.APIGatewayProxyR
 		err = handler.timeTracker.Captured(timeTrackingRecord.DeviceId, recordType, *timeTrackingRecord.Timestamp)
 	}
 
-	response := events.APIGatewayProxyResponse{StatusCode: 200}
 	if err != nil {
 		handler.logger.Error("Unable to capture time tracking recoed, reason: ", err)
-		response.StatusCode = 500
-		response.Body = err.Error()
+		return errorResponse(err), err
 	}
-	return response, err
+	return successfulResponse(), nil
 }
 
 // ToTimeTrackingRecordType converts a AWS IOT click type to a time tracking record type.

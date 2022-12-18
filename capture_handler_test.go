@@ -8,7 +8,6 @@ import (
 	"github.com/aws/aws-lambda-go/events"
 
 	"github.com/stretchr/testify/suite"
-	log "github.com/tommzn/go-log"
 	timetracker "github.com/tommzn/hob-timetracker"
 )
 
@@ -49,11 +48,6 @@ func (suite *HandlerTestSuite) requestForTest(record TimeTrackingRecord) events.
 	return events.APIGatewayProxyRequest{Body: string(content)}
 }
 
-func handlerForTest() *APIGatewayRequestHandler {
-	return newRequestHandler(timetracker.NewLocaLRepository(), loggerForTest())
-}
-
-// loggerForTest creates a new stdout logger for testing.
-func loggerForTest() log.Logger {
-	return log.NewLogger(log.Debug, nil, nil)
+func handlerForTest() *CaptureRequestHandler {
+	return newCaptureRequestHandler(timetracker.NewLocaLRepository(), loggerForTest())
 }

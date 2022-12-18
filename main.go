@@ -34,7 +34,11 @@ func bootstrap() (Handler, error) {
 	if err != nil {
 		return nil, err
 	}
-	return newRequestHandler(timeTracker, logger), nil
+
+	routes := make(map[RequestedResource]Handler)
+	routes["/capture"] = newCaptureRequestHandler(timeTracker, logger)
+	routes["/generatereport"] = newReportGenerateRequestHandler(logger)
+	return newRequestRouter(routes, logger), nil
 }
 
 // loadConfig from config file.
