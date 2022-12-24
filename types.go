@@ -3,6 +3,7 @@ package main
 import (
 	"time"
 
+	sqs "github.com/tommzn/aws-sqs"
 	log "github.com/tommzn/go-log"
 	timetracker "github.com/tommzn/hob-timetracker"
 )
@@ -43,13 +44,8 @@ type CaptureRequestHandler struct {
 
 // ReportGenerateRequestHandler will process request to generate and publish monthly time tracking reports.
 type ReportGenerateRequestHandler struct {
-	logger      log.Logger
-	deviceIds   []string
-	timeTracker timetracker.TimeTracker
-	calculator  timetracker.ReportCalculator
-	formatter   timetracker.ReportFormatter
-	publisher   timetracker.ReportPublisher
-	calendar    timetracker.Calendar
+	logger    log.Logger
+	publisher Publisher
 }
 
 // TimeTrackingReport os a single captured time tracking event.
@@ -76,6 +72,19 @@ type ReportGenerateRequest struct {
 
 	// Month a monthly report should be generated for.
 	Month int `json:"month`
+}
+
+// SqsPublisher is used to publish messages on AWS SQS.
+type SqsPublisher struct {
+
+	// sqsClient sends events obtained from current datasource to defined AWS SQS queue.
+	sqsClient sqs.Publisher
+
+	// Logger logs meesages and errors to a given output or log collector.
+	logger log.Logger
+
+	// Queue defines the AWS SQS queue event from current datasource should be send to.
+	queue string
 }
 
 // AwsConfig used for different AWS clients.

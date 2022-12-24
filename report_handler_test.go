@@ -3,12 +3,10 @@ package main
 import (
 	"encoding/json"
 	"testing"
-	"time"
 
 	"github.com/aws/aws-lambda-go/events"
-
 	"github.com/stretchr/testify/suite"
-	timetracker "github.com/tommzn/hob-timetracker"
+	core "github.com/tommzn/hob-core"
 )
 
 type ReportHandlerTestSuite struct {
@@ -29,6 +27,12 @@ func (suite *ReportHandlerTestSuite) TestProcessRequests() {
 	suite.Equal(200, res1.StatusCode)
 }
 
+func (suite *ReportHandlerTestSuite) TestConvertToReportType() {
+
+	suite.Equal(core.ReportType_MONTHLY_REPORT, toReportType("monthly"))
+	suite.Equal(core.ReportType_NO_TYPE, toReportType("xxx"))
+}
+
 func (suite *ReportHandlerTestSuite) requestForTest(reportGenerateRequest ReportGenerateRequest) events.APIGatewayProxyRequest {
 	content, err := json.Marshal(reportGenerateRequest)
 	suite.Nil(err)
@@ -36,34 +40,5 @@ func (suite *ReportHandlerTestSuite) requestForTest(reportGenerateRequest Report
 }
 
 func reportHandlerForTest() *ReportGenerateRequestHandler {
-
-	conf := configForTest()
-	locale := newLocale(conf)
-	logger := loggerForTest()
-
-	deviceIds := deviceIds(conf)
-	formatter := newReportFormatter()
-	calculator := newReportCalulator(locale)
-
-	return &ReportGenerateRequestHandler{
-		logger:      logger,
-		deviceIds:   deviceIds,
-		timeTracker: timeTrackeForTest(),
-		calculator:  calculator,
-		formatter:   formatter,
-		publisher:   timetracker.NewFilePublisher(),
-	}
-}
-
-func timeTrackeForTest() timetracker.TimeTracker {
-
-	device := "Device01"
-	tracker := timetracker.NewLocaLRepository()
-
-	now := time.Now()
-	firstOfThisMonth := time.Date(2022, time.Month(1), 1, 8, 0, 0, 0, now.Location())
-	firstOfLastMonth := firstOfThisMonth.AddDate(0, -1, 0)
-	tracker.Captured(device, timetracker.WORKDAY, firstOfLastMonth)
-	tracker.Captured(device, timetracker.WORKDAY, firstOfLastMonth.Add(7*time.Hour))
-	return tracker
+	return newReportGenerateRequestHandler(loggerForTest(), newSqsMock())
 }

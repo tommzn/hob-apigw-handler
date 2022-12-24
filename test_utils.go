@@ -2,6 +2,8 @@ package main
 
 import (
 	"errors"
+	"os"
+	"testing"
 
 	"github.com/aws/aws-lambda-go/events"
 	config "github.com/tommzn/go-config"
@@ -38,4 +40,18 @@ func configForTest() config.Config {
 	configLoader := config.NewFileConfigSource(&configFile)
 	config, _ := configLoader.Load()
 	return config
+}
+
+func emptyConfigForTest() config.Config {
+	configFile := "fixtures/testconfig-empty.yml"
+	configLoader := config.NewFileConfigSource(&configFile)
+	config, _ := configLoader.Load()
+	return config
+}
+
+// skipCI returns true if env variable CI is set
+func skipCI(t *testing.T) {
+	if _, isSet := os.LookupEnv("CI"); isSet {
+		t.Skip("Skipping testing in CI environment")
+	}
 }
