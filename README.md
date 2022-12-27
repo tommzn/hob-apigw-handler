@@ -8,7 +8,7 @@ This handler belongs to the [HomeOffice Button - Time Tracking](https://github.c
 ## API Description
 This handler can be used with an API which provides access to a capture and a generatereport endpoint.
 ### Example
-'''yaml
+```yaml
 swagger: "2.0"
 info:
   title: "Time Tracking API"
@@ -91,7 +91,7 @@ definitions:
         description: "timestamp this time tracking event has been captured. (Optional)"
     title: "TimeTrackingRecord"
     description: "Single time tracking event."
-'''
+```
 
 # Links
 [HomeOffice Button - Time Tracking](https://github.com/tommzn/hob-timetracker)  
