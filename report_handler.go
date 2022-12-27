@@ -63,3 +63,15 @@ func toReportType(reportType string) core.ReportType {
 		return core.ReportType_NO_TYPE
 	}
 }
+
+func cloudWatchTrigger() (string, error) {
+	event := &core.GenerateReportRequest{
+		Format:      core.ReportFormat_EXCEL,
+		Type:        core.ReportType_MONTHLY_REPORT,
+		NamePattern: "TimeTrackingReport_200601",
+		Delivery: &core.ReportDelivery{
+			S3: &core.S3Target{},
+		},
+	}
+	return core.SerializeEvent(event)
+}

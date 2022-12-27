@@ -33,6 +33,16 @@ func (suite *ReportHandlerTestSuite) TestConvertToReportType() {
 	suite.Equal(core.ReportType_NO_TYPE, toReportType("xxx"))
 }
 
+func (suite *ReportHandlerTestSuite) TestGetCloudWatchRuleContent() {
+
+	content, err := cloudWatchTrigger()
+	suite.Nil(err)
+	suite.True(len(content) > 10)
+
+	logger := loggerForTest()
+	logger.Debug("CouldWatch Content: ", content)
+}
+
 func (suite *ReportHandlerTestSuite) requestForTest(reportGenerateRequest ReportGenerateRequest) events.APIGatewayProxyRequest {
 	content, err := json.Marshal(reportGenerateRequest)
 	suite.Nil(err)
