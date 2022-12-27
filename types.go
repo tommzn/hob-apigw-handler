@@ -52,7 +52,7 @@ type ReportGenerateRequestHandler struct {
 type TimeTrackingRecord struct {
 
 	// DeviceId is an identifier of a device which captures a time tracking record.
-	DeviceId string `json:"deviceid`
+	DeviceId string `json:"deviceid"`
 
 	// Type of a time tracking event.
 	ClickType IotClickType `json:"clicktype"`
@@ -65,13 +65,13 @@ type TimeTrackingRecord struct {
 type ReportGenerateRequest struct {
 
 	// Type of report which hould be generated. Atm monthly reports are supported, only.
-	Type string `json:"type`
+	Type string `json:"type"`
 
 	// Year a monthly report should be generated for.
-	Year int `json:"year`
+	Year int `json:"year"`
 
 	// Month a monthly report should be generated for.
-	Month int `json:"month`
+	Month int `json:"month"`
 }
 
 // SqsPublisher is used to publish messages on AWS SQS.
