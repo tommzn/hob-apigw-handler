@@ -33,13 +33,13 @@ func (handler *ReportGenerateRequestHandler) Process(request events.APIGatewayPr
 		Year:        int64(reportGenerateRequest.Year),
 		Month:       int64(reportGenerateRequest.Month),
 		NamePattern: "TimeTrackingReport_200601",
-		Delivery:    &core.ReportDelivery{},
+		Delivery: &core.ReportDelivery{
+			S3: &core.S3Target{},
+		},
 	}
 
 	if reportGenerateRequest.Destination != "" {
 		event.Delivery.Mail = &core.MailTarget{ToAddresses: []string{reportGenerateRequest.Destination}}
-	} else {
-		event.Delivery.S3 = &core.S3Target{}
 	}
 
 	publishErr := handler.publisher.Send(event)
