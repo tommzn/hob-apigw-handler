@@ -72,6 +72,9 @@ type ReportGenerateRequest struct {
 
 	// Month a monthly report should be generated for.
 	Month int `json:"month"`
+
+	// Destination defines receiver of an email.
+	Destination string `json:"destination"`
 }
 
 // SqsPublisher is used to publish messages on AWS SQS.
