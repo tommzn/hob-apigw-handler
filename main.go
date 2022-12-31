@@ -36,10 +36,12 @@ func bootstrap() (Handler, error) {
 		return nil, err
 	}
 
+	timeTrackingRecordHandler := newTimeTrackingRecordHandler(logger)
 	routes := make(map[RequestedResource]Handler)
 	routes["/capture"] = newCaptureRequestHandler(timeTracker, logger)
 	routes["/generatereport"] = newReportGenerateRequestHandler(logger, newSqsPublisher(conf, logger))
-	routes["/timetrackingrecords"] = newTimeTrackingRecordHandler(logger)
+	routes["/timetrackingrecords"] = timeTrackingRecordHandler
+	routes["/timetrackingrecords/{id}"] = timeTrackingRecordHandler
 	return newRequestRouter(routes, logger), nil
 }
 
