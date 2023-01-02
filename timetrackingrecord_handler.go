@@ -48,6 +48,7 @@ func (handler *TimeTrackingRecordHandler) Process(request events.APIGatewayProxy
 			handler.logger.Error(err)
 			return errorResponseWithStatus(err, http.StatusBadRequest), err
 		}
+		handler.logger.Debugf("Looking for records in range %s/%s", timeRangeStart.Format(time.RFC3339), timeRangeEnd.Format(time.RFC3339))
 
 		records, err := handler.timeTracker.ListRecords(deviceId, *timeRangeStart, *timeRangeEnd)
 		handler.logger.Debug(err)
@@ -56,7 +57,7 @@ func (handler *TimeTrackingRecordHandler) Process(request events.APIGatewayProxy
 			return errorResponseWithStatus(err, http.StatusInternalServerError), err
 		}
 		if len(records) == 0 {
-			handler.logger.Error("No time tracking records found. (5s%s)", deviceId, dateStr)
+			handler.logger.Error("No time tracking records found. (%s&%s)", deviceId, dateStr)
 			return responseWithStatus(http.StatusNotFound), nil
 		}
 
