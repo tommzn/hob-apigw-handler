@@ -57,7 +57,7 @@ func (handler *TimeTrackingRecordHandler) Process(request events.APIGatewayProxy
 			return errorResponseWithStatus(err, http.StatusInternalServerError), err
 		}
 		if len(records) == 0 {
-			handler.logger.Error("No time tracking records found. (%s&%s)", deviceId, dateStr)
+			handler.logger.Errorf("No time tracking records found. (%s&%s)", deviceId, dateStr)
 			return responseWithStatus(http.StatusNotFound), nil
 		}
 
@@ -136,7 +136,7 @@ func (handler *TimeTrackingRecordHandler) timeRangeForDate(layout, dateValue str
 	}
 
 	location := time.Now().Location()
-	start := time.Date(date.Year(), date.Month(), 1, 0, 0, 0, 0, location)
+	start := time.Date(date.Year(), date.Month(), date.Day(), 0, 0, 0, 0, location)
 	return timePtr(start), timePtr(start.AddDate(0, 0, 1).Add(-1 * time.Second))
 }
 
