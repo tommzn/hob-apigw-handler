@@ -50,7 +50,9 @@ type ReportGenerateRequestHandler struct {
 
 // TimeTrackingRecordHandler is used to maintain time tracking records.
 type TimeTrackingRecordHandler struct {
-	logger log.Logger
+	logger              log.Logger
+	timeTrackingManager timetracker.TimeTrackingRecordManager
+	timeTracker         timetracker.TimeTracker
 }
 
 // TimeTrackingReport os a single captured time tracking event.
