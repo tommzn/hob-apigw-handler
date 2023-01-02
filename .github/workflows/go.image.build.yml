@@ -6,4 +6,6 @@ on:
 
 jobs:
   go-image-build:
-    uses:  tommzn/github-ci/.github/workflows/go.image.build.yml@v1.0.2
+    uses:  tommzn/github-ci/.github/workflows/go.image.build.yml@v1.0.3
+    secrets:
+      cr-pat: ${{ secrets.CR_PAT }}
