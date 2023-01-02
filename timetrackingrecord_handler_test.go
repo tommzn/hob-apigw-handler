@@ -58,7 +58,7 @@ func (suite *TimeTrackingRecordHandlerTestSuite) TestListTimeTrackingRecords() {
 	request2 := suite.requestForTest("/timetrackingrecords", http.MethodGet)
 	request2.QueryStringParameters = map[string]string{"deviceid": "Device01", "date": "2021-01-01"}
 	res2, err2 := handler.Process(request2)
-	suite.NotNil(err2)
+	suite.Nil(err2)
 	suite.Equal(http.StatusNotFound, res2.StatusCode)
 
 	request3_1 := suite.requestForTest("/timetrackingrecords", http.MethodGet)

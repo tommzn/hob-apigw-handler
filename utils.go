@@ -9,7 +9,12 @@ func successfulResponse() events.APIGatewayProxyResponse {
 	return events.APIGatewayProxyResponse{StatusCode: 200}
 }
 
-// SuccessfulResponse returns a response with status code 200.
+// ResponseWithStatus returns a response with given status code.
+func responseWithStatus(statusCode int) events.APIGatewayProxyResponse {
+	return events.APIGatewayProxyResponse{StatusCode: statusCode}
+}
+
+// ResponseWithContent returns a response with given content and status code.
 func responseWithContent(content string, statusCode int) events.APIGatewayProxyResponse {
 	return events.APIGatewayProxyResponse{StatusCode: statusCode, Body: content}
 }

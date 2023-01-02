@@ -56,9 +56,8 @@ func (handler *TimeTrackingRecordHandler) Process(request events.APIGatewayProxy
 			return errorResponseWithStatus(err, http.StatusInternalServerError), err
 		}
 		if len(records) == 0 {
-			err := errors.New("No time tracking records found.")
-			handler.logger.Error(err)
-			return errorResponseWithStatus(err, http.StatusNotFound), err
+			handler.logger.Error("No time tracking records found. (5s%s)", deviceId, dateStr)
+			return responseWithStatus(http.StatusNotFound), nil
 		}
 
 		responseContent, err := json.Marshal(records)
