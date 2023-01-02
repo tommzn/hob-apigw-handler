@@ -5,6 +5,5 @@ on:
       - v*
 
 jobs:
-  go-build:
-    name: Build Golang Image
-      uses:  tommzn/github-ci/.github/workflows/go.image.build.yml@v1.0.2
+  go-image-build:
+    uses:  tommzn/github-ci/.github/workflows/go.image.build.yml@v1.0.2
