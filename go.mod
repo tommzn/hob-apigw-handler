@@ -4,7 +4,7 @@ go 1.19
 
 require (
 	github.com/tommzn/go-config v1.1.0
-	github.com/tommzn/hob-timetracker v1.4.2
+	github.com/tommzn/hob-timetracker v1.4.3
 )
 
 require (

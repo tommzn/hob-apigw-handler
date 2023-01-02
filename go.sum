@@ -242,6 +242,8 @@ github.com/tommzn/hob-timetracker v1.4.1 h1:VD7ElbvSuyzpLUHOMOYYvjF3jDwqjjH1/lXp
 github.com/tommzn/hob-timetracker v1.4.1/go.mod h1:iieABEFBqyIgOt65zDMOAcw37JL8Tl/wnBSUSqSIlvo=
 github.com/tommzn/hob-timetracker v1.4.2 h1:jYirUBnDdI7RQetp5ZpX8e3UfdcA5fR301FBK7x65Zk=
 github.com/tommzn/hob-timetracker v1.4.2/go.mod h1:iieABEFBqyIgOt65zDMOAcw37JL8Tl/wnBSUSqSIlvo=
+github.com/tommzn/hob-timetracker v1.4.3 h1:WWCmU0osK0Xe3NAAC18Mpbl9SOphFNkJauChbbPnfEk=
+github.com/tommzn/hob-timetracker v1.4.3/go.mod h1:iieABEFBqyIgOt65zDMOAcw37JL8Tl/wnBSUSqSIlvo=
 github.com/xiang90/probing v0.0.0-20190116061207-43a291ad63a2/go.mod h1:UETIi67q53MR2AWcXfiuqkDkRtnGDLqkBTpCHuJHxtU=
 github.com/xuri/efp v0.0.0-20220603152613-6918739fd470 h1:6932x8ltq1w4utjmfMPVj09jdMlkY0aiA6+Skbtl3/c=
 github.com/xuri/efp v0.0.0-20220603152613-6918739fd470/go.mod h1:ybY/Jr0T0GTCnYjKqmdwxyxn2BQf2RcQIIvex5QldPI=
