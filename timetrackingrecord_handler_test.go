@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"testing"
 	"time"
@@ -104,6 +105,13 @@ func (suite *TimeTrackingRecordHandlerTestSuite) TestDeleteTimeTrackingRecords()
 	var records2 []timetracker.TimeTrackingRecord
 	suite.Nil(json.Unmarshal([]byte(res2_1.Body), &records2))
 	suite.Len(records2, 1)
+}
+
+func (suite *TimeTrackingRecordHandlerTestSuite) TestJsonMarshalTime() {
+
+	t1 := time.Now()
+	b, _ := json.Marshal(t1)
+	fmt.Println(string(b))
 }
 
 func (suite *TimeTrackingRecordHandlerTestSuite) requestForTest(resource, httpMethod string) events.APIGatewayProxyRequest {

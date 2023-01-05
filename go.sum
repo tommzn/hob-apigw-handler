@@ -228,6 +228,8 @@ github.com/tommzn/go-utils v1.0.2 h1:OnUdCJC46ogBDNnt+zwG1bN/RyoYoeNWBvPTbBITIGo
 github.com/tommzn/go-utils v1.0.2/go.mod h1:TaQQLOtzHNmRx+/WUHgyNYvsqUX1N0JJEePC8Pye0Ow=
 github.com/tommzn/hob-core v1.0.4 h1:MmIHlIbqw8IZTMu8GE3R/l4pYdlUOCKSOYgRvt38eT8=
 github.com/tommzn/hob-core v1.0.4/go.mod h1:wNkndU5CZu9F+CqRBg6cey+9HKe2pFeqE7dJxe5gPXM=
+github.com/tommzn/hob-core v1.0.5 h1:DCVauwXU4nHlBI4n1lfWL+l/TR3nDK0uCZA/5YViEBc=
+github.com/tommzn/hob-core v1.0.5/go.mod h1:wNkndU5CZu9F+CqRBg6cey+9HKe2pFeqE7dJxe5gPXM=
 github.com/tommzn/hob-timetracker v1.0.1 h1:k0MzJA2x08MN/zIHDTZI0r7wyzTVgVuNsofsRSzt6gQ=
 github.com/tommzn/hob-timetracker v1.0.1/go.mod h1:Ibs+8k7LiTqGOxDqxskNcNDxjJ4ezeXPu/cJ0VbMHe0=
 github.com/tommzn/hob-timetracker v1.0.2 h1:WJRlPubtUewT2CK4SmJ/VjfojogCSrDXy9Yh5ac0ceM=

@@ -36,6 +36,7 @@ func (handler *ReportGenerateRequestHandler) Process(request events.APIGatewayPr
 		Delivery: &core.ReportDelivery{
 			S3: &core.S3Target{},
 		},
+		DeviceIds: reportGenerateRequest.DeviceIds,
 	}
 
 	if reportGenerateRequest.Destination != "" {

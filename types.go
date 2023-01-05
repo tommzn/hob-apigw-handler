@@ -82,6 +82,9 @@ type ReportGenerateRequest struct {
 
 	// Destination defines receiver of an email.
 	Destination string `json:"destination"`
+
+	// DeviceIds is an optional list of device ids of which time tracking records should be used to generate a report.
+	DeviceIds []string `json:"deviceids"`
 }
 
 // SqsPublisher is used to publish messages on AWS SQS.
