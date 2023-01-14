@@ -56,6 +56,7 @@ workflows:
             branches:
               only: main
       - ecr-build-and-deploy:
+          context: aws-env
           filters:
             tags:
               only: /^v[0-9]+(\.[0-9]+)*$/
@@ -64,6 +65,7 @@ workflows:
           requires:
             - go-build
       - lambda-func-update:
+          context: aws-env
           filters:
             branches:
               ignore: /.*/
