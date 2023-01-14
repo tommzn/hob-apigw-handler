@@ -64,7 +64,7 @@ workflows:
           requires:
             - ecr-build-and-deploy
       - notify: 
-          context: slack-secrets
+          context: slack-env
           requires:
             - lambda-func-update
           
