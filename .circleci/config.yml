@@ -57,19 +57,22 @@ workflows:
               ignore: /.*/
       - ecr-build-and-deploy:
           context: aws-env
-          tags:
+          filters:
+            tags:
               only: /^v[0-9]+(\.[0-9]+)*$/
           requires:
             - go-build
       - lambda-func-update:
           context: aws-env
-          tags:
+          filters:
+            tags:
               only: /^v[0-9]+(\.[0-9]+)*$/
           requires:
             - ecr-build-and-deploy
       - notify: 
           context: slack-env
-          tags:
+          filters:
+            tags:
               only: /^v[0-9]+(\.[0-9]+)*$/
           requires:
             - lambda-func-update
