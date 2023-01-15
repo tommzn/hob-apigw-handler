@@ -114,6 +114,15 @@ func (suite *TimeTrackingRecordHandlerTestSuite) TestJsonMarshalTime() {
 	fmt.Println(string(b))
 }
 
+func (suite *TimeTrackingRecordHandlerTestSuite) TestKeyEncoding() {
+
+	key := "timetracker/P5SJVQ20074C6774/2022/12/24/faa5260b-01d3-41ed-bde9-8eb7bbfe9c0a"
+
+	encodedKey := encodeKey(key)
+	decodedKey := decodeKey(encodedKey)
+	suite.Equal(key, decodedKey)
+}
+
 func (suite *TimeTrackingRecordHandlerTestSuite) requestForTest(resource, httpMethod string) events.APIGatewayProxyRequest {
 	return events.APIGatewayProxyRequest{Resource: resource, HTTPMethod: httpMethod}
 }

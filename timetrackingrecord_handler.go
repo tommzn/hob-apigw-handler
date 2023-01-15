@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/base64"
 	"encoding/json"
 	"errors"
 	"net/http"
@@ -61,6 +62,9 @@ func (handler *TimeTrackingRecordHandler) Process(request events.APIGatewayProxy
 			return responseWithStatus(http.StatusNotFound), nil
 		}
 
+		for idx, _ := range records {
+			records[idx].Key = encodeKey(records[idx].Key)
+		}
 		responseContent, err := json.Marshal(records)
 		if err != nil {
 			handler.logger.Error(err)
@@ -107,9 +111,10 @@ func (handler *TimeTrackingRecordHandler) Process(request events.APIGatewayProxy
 			handler.logger.Error(err)
 			return errorResponseWithStatus(err, http.StatusBadRequest), err
 		}
-		handler.logger.Debug("Receive time tracking record delete for id: ", id)
+		decodedId := decodeKey(id)
+		handler.logger.Debug("Receive time tracking record delete for id: ", decodedId)
 
-		err := handler.timeTrackingManager.Delete(id)
+		err := handler.timeTrackingManager.Delete(decodedId)
 		if err != nil {
 			handler.logger.Error(err)
 			return errorResponseWithStatus(err, http.StatusInternalServerError), err
@@ -142,4 +147,13 @@ func (handler *TimeTrackingRecordHandler) timeRangeForDate(layout, dateValue str
 
 func timePtr(t time.Time) *time.Time {
 	return &t
+}
+
+func encodeKey(key string) string {
+	return base64.StdEncoding.EncodeToString([]byte(key))
+}
+
+func decodeKey(key string) string {
+	decoded, _ := base64.StdEncoding.DecodeString(key)
+	return string(decoded)
 }
