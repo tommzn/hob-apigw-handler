@@ -1,8 +1,6 @@
 package main
 
 import (
-	"time"
-
 	sqs "github.com/tommzn/aws-sqs"
 	log "github.com/tommzn/go-log"
 	timetracker "github.com/tommzn/hob-timetracker"
@@ -65,7 +63,7 @@ type TimeTrackingRecord struct {
 	ClickType IotClickType `json:"clicktype"`
 
 	// Timestamp is the point in time a time tracking event has occured.
-	Timestamp *time.Time `json:"timestamp,omitempty"`
+	Timestamp *APITime `json:"timestamp,omitempty"`
 }
 
 // ReportGenerateRequest is used to triiger report generation for a specific year and month.

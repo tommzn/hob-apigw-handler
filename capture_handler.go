@@ -32,7 +32,7 @@ func (handler *CaptureRequestHandler) Process(request events.APIGatewayProxyRequ
 	if timeTrackingRecord.Timestamp == nil {
 		err = handler.timeTracker.Capture(timeTrackingRecord.DeviceId, recordType)
 	} else {
-		err = handler.timeTracker.Captured(timeTrackingRecord.DeviceId, recordType, *timeTrackingRecord.Timestamp)
+		err = handler.timeTracker.Captured(timeTrackingRecord.DeviceId, recordType, timeTrackingRecord.Timestamp.AsTime())
 	}
 
 	if err != nil {

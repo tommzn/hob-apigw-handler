@@ -29,7 +29,7 @@ func (suite *HandlerTestSuite) TestProcessRequests() {
 	suite.Equal(200, res1.StatusCode)
 
 	now := time.Now()
-	record.Timestamp = &now
+	record.Timestamp = &APITime{Time: now}
 	res2, err2 := handler.Process(suite.requestForTest(record))
 	suite.Nil(err2)
 	suite.Equal(200, res2.StatusCode)
