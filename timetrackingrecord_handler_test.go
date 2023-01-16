@@ -121,6 +121,13 @@ func (suite *TimeTrackingRecordHandlerTestSuite) TestKeyEncoding() {
 	encodedKey := encodeKey(key)
 	decodedKey := decodeKey(encodedKey)
 	suite.Equal(key, decodedKey)
+
+	suite.Equal("timetracker%2FP5SJVQ20074C6774%2F2022%2F12%2F24%2Ffaa5260b-01d3-41ed-bde9-8eb7bbfe9c0a", pathExcapeKey(key))
+	suite.Equal(key, pathUnexcapeKey(pathExcapeKey(key)))
+
+	suite.Equal("timetracker%2FP5SJVQ20074C6774%2F2022%2F12%2F24%2Ffaa5260b-01d3-41ed-bde9-8eb7bbfe9c0a", queryExcapeKey(key))
+	suite.Equal(key, queryUnexcapeKey(queryExcapeKey(key)))
+
 }
 
 func (suite *TimeTrackingRecordHandlerTestSuite) requestForTest(resource, httpMethod string) events.APIGatewayProxyRequest {

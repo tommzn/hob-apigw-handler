@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"net/http"
+	"net/url"
 	"time"
 
 	"github.com/aws/aws-lambda-go/events"
@@ -63,7 +64,7 @@ func (handler *TimeTrackingRecordHandler) Process(request events.APIGatewayProxy
 		}
 
 		for idx, _ := range records {
-			records[idx].Key = encodeKey(records[idx].Key)
+			records[idx].Key = pathExcapeKey(records[idx].Key)
 		}
 		responseContent, err := json.Marshal(records)
 		if err != nil {
@@ -111,7 +112,7 @@ func (handler *TimeTrackingRecordHandler) Process(request events.APIGatewayProxy
 			handler.logger.Error(err)
 			return errorResponseWithStatus(err, http.StatusBadRequest), err
 		}
-		decodedId := decodeKey(id)
+		decodedId := pathUnexcapeKey(id)
 		handler.logger.Debug("Receive time tracking record delete for id: ", decodedId)
 
 		err := handler.timeTrackingManager.Delete(decodedId)
@@ -147,6 +148,24 @@ func (handler *TimeTrackingRecordHandler) timeRangeForDate(layout, dateValue str
 
 func timePtr(t time.Time) *time.Time {
 	return &t
+}
+
+func queryExcapeKey(key string) string {
+	return url.QueryEscape(key)
+}
+
+func queryUnexcapeKey(key string) string {
+	unEscapedKey, _ := url.QueryUnescape(key)
+	return unEscapedKey
+}
+
+func pathExcapeKey(key string) string {
+	return url.PathEscape(key)
+}
+
+func pathUnexcapeKey(key string) string {
+	unescapedKey, _ := url.PathUnescape(key)
+	return unescapedKey
 }
 
 func encodeKey(key string) string {
