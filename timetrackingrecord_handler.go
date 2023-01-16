@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/base64"
 	"encoding/json"
 	"errors"
 	"net/http"
@@ -64,7 +63,7 @@ func (handler *TimeTrackingRecordHandler) Process(request events.APIGatewayProxy
 		}
 
 		for idx, _ := range records {
-			records[idx].Key = pathExcapeKey(records[idx].Key)
+			records[idx].Key = queryExcapeKey(records[idx].Key)
 		}
 		responseContent, err := json.Marshal(records)
 		if err != nil {
@@ -106,13 +105,13 @@ func (handler *TimeTrackingRecordHandler) Process(request events.APIGatewayProxy
 
 	case http.MethodDelete:
 
-		id, ok := request.PathParameters["id"]
+		id, ok := request.QueryStringParameters["id"]
 		if !ok {
 			err := errors.New("Missing time tracking record id.")
 			handler.logger.Error(err)
 			return errorResponseWithStatus(err, http.StatusBadRequest), err
 		}
-		decodedId := pathUnexcapeKey(id)
+		decodedId := queryUnexcapeKey(id)
 		handler.logger.Debug("Receive time tracking record delete for id: ", decodedId)
 
 		err := handler.timeTrackingManager.Delete(decodedId)
@@ -157,22 +156,4 @@ func queryExcapeKey(key string) string {
 func queryUnexcapeKey(key string) string {
 	unEscapedKey, _ := url.QueryUnescape(key)
 	return unEscapedKey
-}
-
-func pathExcapeKey(key string) string {
-	return url.PathEscape(key)
-}
-
-func pathUnexcapeKey(key string) string {
-	unescapedKey, _ := url.PathUnescape(key)
-	return unescapedKey
-}
-
-func encodeKey(key string) string {
-	return base64.StdEncoding.EncodeToString([]byte(key))
-}
-
-func decodeKey(key string) string {
-	decoded, _ := base64.StdEncoding.DecodeString(key)
-	return string(decoded)
 }

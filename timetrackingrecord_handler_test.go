@@ -91,8 +91,8 @@ func (suite *TimeTrackingRecordHandlerTestSuite) TestDeleteTimeTrackingRecords()
 	suite.Nil(json.Unmarshal([]byte(res1.Body), &records))
 	suite.Len(records, 2)
 
-	request2 := suite.requestForTest("/timetrackingrecords/{id}", http.MethodDelete)
-	request2.PathParameters = map[string]string{"id": records[0].Key}
+	request2 := suite.requestForTest("/timetrackingrecords", http.MethodDelete)
+	request2.QueryStringParameters = map[string]string{"id": records[0].Key}
 	res2, err2 := handler.Process(request2)
 	suite.Nil(err2)
 	suite.Equal(http.StatusNoContent, res2.StatusCode)
@@ -118,16 +118,8 @@ func (suite *TimeTrackingRecordHandlerTestSuite) TestKeyEncoding() {
 
 	key := "timetracker/P5SJVQ20074C6774/2022/12/24/faa5260b-01d3-41ed-bde9-8eb7bbfe9c0a"
 
-	encodedKey := encodeKey(key)
-	decodedKey := decodeKey(encodedKey)
-	suite.Equal(key, decodedKey)
-
-	suite.Equal("timetracker%2FP5SJVQ20074C6774%2F2022%2F12%2F24%2Ffaa5260b-01d3-41ed-bde9-8eb7bbfe9c0a", pathExcapeKey(key))
-	suite.Equal(key, pathUnexcapeKey(pathExcapeKey(key)))
-
 	suite.Equal("timetracker%2FP5SJVQ20074C6774%2F2022%2F12%2F24%2Ffaa5260b-01d3-41ed-bde9-8eb7bbfe9c0a", queryExcapeKey(key))
 	suite.Equal(key, queryUnexcapeKey(queryExcapeKey(key)))
-
 }
 
 func (suite *TimeTrackingRecordHandlerTestSuite) requestForTest(resource, httpMethod string) events.APIGatewayProxyRequest {
