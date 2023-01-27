@@ -91,6 +91,17 @@ func (suite *TimeTrackingRecordHandlerTestSuite) TestDeleteTimeTrackingRecords()
 	suite.Nil(json.Unmarshal([]byte(res1.Body), &records))
 	suite.Len(records, 2)
 
+	request1_1 := suite.requestForTest("/timetrackingrecords", http.MethodGet)
+	request1_1.QueryStringParameters = map[string]string{"deviceids": "Device01,Device02", "date": "2022-01-01"}
+	res1_1, err1_1 := handler.Process(request1_1)
+	suite.Nil(err1_1)
+	suite.Equal(http.StatusOK, res1_1.StatusCode)
+	suite.NotEqual("", res1_1.Body)
+
+	var records1_1 []timetracker.TimeTrackingRecord
+	suite.Nil(json.Unmarshal([]byte(res1_1.Body), &records1_1))
+	suite.Len(records1_1, 2)
+
 	request2 := suite.requestForTest("/timetrackingrecords", http.MethodDelete)
 	request2.QueryStringParameters = map[string]string{"id": records[0].Key}
 	res2, err2 := handler.Process(request2)

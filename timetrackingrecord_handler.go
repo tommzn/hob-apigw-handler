@@ -5,6 +5,7 @@ import (
 	"errors"
 	"net/http"
 	"net/url"
+	"strings"
 	"time"
 
 	"github.com/aws/aws-lambda-go/events"
@@ -29,19 +30,20 @@ func (handler *TimeTrackingRecordHandler) Process(request events.APIGatewayProxy
 	switch request.HTTPMethod {
 
 	case http.MethodGet:
-		deviceId, ok1 := request.QueryStringParameters["deviceid"]
-		if !ok1 {
+		deviceIds := deviceIdsFromRequest(request)
+		if len(deviceIds) == 0 {
 			err := errors.New("Missing device id.")
 			handler.logger.Error(err)
 			return errorResponseWithStatus(err, http.StatusBadRequest), err
 		}
+
 		dateStr, ok2 := request.QueryStringParameters["date"]
 		if !ok2 {
 			err := errors.New("Missing date.")
 			handler.logger.Error(err)
 			return errorResponseWithStatus(err, http.StatusBadRequest), err
 		}
-		handler.logger.Debugf("Receive GET for DeviceId: %s, Date: %s", deviceId, dateStr)
+		handler.logger.Debugf("Receive GET for DeviceId: %s, Date: %s", strings.Join(deviceIds, ","), dateStr)
 
 		timeRangeStart, timeRangeEnd := handler.timeRangeForDate("2006-01-02", dateStr)
 		if timeRangeStart == nil || timeRangeEnd == nil {
@@ -51,14 +53,18 @@ func (handler *TimeTrackingRecordHandler) Process(request events.APIGatewayProxy
 		}
 		handler.logger.Debugf("Looking for records in range %s/%s", timeRangeStart.Format(time.RFC3339), timeRangeEnd.Format(time.RFC3339))
 
-		records, err := handler.timeTracker.ListRecords(deviceId, *timeRangeStart, *timeRangeEnd)
-		handler.logger.Debug(err)
-		if err != nil {
-			handler.logger.Error(err)
-			return errorResponseWithStatus(err, http.StatusInternalServerError), err
+		records := []timetracker.TimeTrackingRecord{}
+		for _, deviceId := range deviceIds {
+			recordsForDevice, err := handler.timeTracker.ListRecords(deviceId, *timeRangeStart, *timeRangeEnd)
+			if err != nil {
+				handler.logger.Error(err)
+				return errorResponseWithStatus(err, http.StatusInternalServerError), err
+			}
+			records = append(records, recordsForDevice...)
 		}
+
 		if len(records) == 0 {
-			handler.logger.Errorf("No time tracking records found. (%s&%s)", deviceId, dateStr)
+			handler.logger.Errorf("No time tracking records found. (%s&%s)", strings.Join(deviceIds, ","), dateStr)
 			return responseWithStatus(http.StatusNotFound), nil
 		}
 
@@ -156,4 +162,17 @@ func queryExcapeKey(key string) string {
 func queryUnexcapeKey(key string) string {
 	unEscapedKey, _ := url.QueryUnescape(key)
 	return unEscapedKey
+}
+
+func deviceIdsFromRequest(request events.APIGatewayProxyRequest) []string {
+
+	listOfDeviceIds := []string{}
+	if deviceId, ok := request.QueryStringParameters["deviceid"]; ok {
+		listOfDeviceIds = append(listOfDeviceIds, deviceId)
+	}
+	if deviceIdStr, ok := request.QueryStringParameters["deviceids"]; ok {
+		deviceIds := strings.Split(deviceIdStr, ",")
+		listOfDeviceIds = append(listOfDeviceIds, deviceIds...)
+	}
+	return listOfDeviceIds
 }

@@ -41,7 +41,6 @@ func bootstrap() (Handler, error) {
 	routes["/capture"] = newCaptureRequestHandler(timeTracker, logger)
 	routes["/generatereport"] = newReportGenerateRequestHandler(logger, newSqsPublisher(conf, logger))
 	routes["/timetrackingrecords"] = timeTrackingRecordHandler
-	routes["/timetrackingrecords/{id}"] = timeTrackingRecordHandler
 	return newRequestRouter(routes, logger), nil
 }
 
