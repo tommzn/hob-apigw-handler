@@ -51,10 +51,10 @@ func (handler *TimeTrackingRecordHandler) Process(request events.APIGatewayProxy
 			handler.logger.Error(err)
 			return errorResponseWithStatus(err, http.StatusBadRequest), err
 		}
-		handler.logger.Debugf("Looking for records in range %s/%s", timeRangeStart.Format(time.RFC3339), timeRangeEnd.Format(time.RFC3339))
 
 		records := []timetracker.TimeTrackingRecord{}
 		for _, deviceId := range deviceIds {
+			handler.logger.Debugf("Looking for records: deviceid: %s, range %s/%s", deviceId, timeRangeStart.Format(time.RFC3339), timeRangeEnd.Format(time.RFC3339))
 			recordsForDevice, err := handler.timeTracker.ListRecords(deviceId, *timeRangeStart, *timeRangeEnd)
 			if err != nil {
 				handler.logger.Error(err)
