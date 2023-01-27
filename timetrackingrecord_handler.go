@@ -171,8 +171,10 @@ func deviceIdsFromRequest(request events.APIGatewayProxyRequest) []string {
 		listOfDeviceIds = append(listOfDeviceIds, deviceId)
 	}
 	if deviceIdStr, ok := request.QueryStringParameters["deviceids"]; ok {
-		deviceIds := strings.Split(deviceIdStr, ",")
-		listOfDeviceIds = append(listOfDeviceIds, deviceIds...)
+		if excapedDeviceIds, err := url.QueryUnescape(deviceIdStr); err == nil {
+			deviceIds := strings.Split(excapedDeviceIds, ",")
+			listOfDeviceIds = append(listOfDeviceIds, deviceIds...)
+		}
 	}
 	return listOfDeviceIds
 }
