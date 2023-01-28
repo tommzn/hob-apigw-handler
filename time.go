@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"strings"
 	"time"
 )
@@ -29,6 +30,11 @@ func (apiTime *APITime) UnmarshalJSON(b []byte) error {
 	}
 	return parseError
 
+}
+
+func (apiTime *APITime) MarshalJSON() ([]byte, error) {
+	stamp := fmt.Sprintf("\"%s\"", apiTime.Format(dateFormatList[1]))
+	return []byte(stamp), nil
 }
 
 func (apiTime *APITime) AsTime() time.Time {
