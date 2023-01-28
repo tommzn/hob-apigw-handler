@@ -52,7 +52,7 @@ func (handler *TimeTrackingRecordHandler) Process(request events.APIGatewayProxy
 			return errorResponseWithStatus(err, http.StatusBadRequest), err
 		}
 
-		records := []timetracker.TimeTrackingRecord{}
+		repositoryRecords := []timetracker.TimeTrackingRecord{}
 		for _, deviceId := range deviceIds {
 			handler.logger.Debugf("Looking for records: deviceid: %s, range %s/%s", deviceId, timeRangeStart.Format(time.RFC3339), timeRangeEnd.Format(time.RFC3339))
 			recordsForDevice, err := handler.timeTracker.ListRecords(deviceId, *timeRangeStart, *timeRangeEnd)
@@ -61,7 +61,12 @@ func (handler *TimeTrackingRecordHandler) Process(request events.APIGatewayProxy
 				handler.logger.Error(err)
 				return errorResponseWithStatus(err, http.StatusInternalServerError), err
 			}
-			records = append(records, recordsForDevice...)
+			repositoryRecords = append(repositoryRecords, recordsForDevice...)
+		}
+
+		records := []TimeTrackingRecord{}
+		for _, repositoryRecord := range repositoryRecords {
+			records = append(records, TimeTrackingRecord{Key: repositoryRecord.Key, DeviceId: repositoryRecord.DeviceId, Type: repositoryRecord.Type, Timestamp: &APITime{Time: repositoryRecord.Timestamp}})
 		}
 
 		if len(records) == 0 {

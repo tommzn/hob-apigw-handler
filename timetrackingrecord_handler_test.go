@@ -35,7 +35,7 @@ func (suite *TimeTrackingRecordHandlerTestSuite) TestAddTimeTrackingRecord() {
 	suite.Equal(http.StatusCreated, res1.StatusCode)
 	suite.NotEqual("", res1.Body)
 
-	var timeTrackingRecord1_1 timetracker.TimeTrackingRecord
+	var timeTrackingRecord1_1 TimeTrackingRecord
 	suite.Nil(json.Unmarshal([]byte(res1.Body), &timeTrackingRecord1_1))
 	suite.NotEqual("", timeTrackingRecord1_1.Key)
 }
@@ -52,7 +52,7 @@ func (suite *TimeTrackingRecordHandlerTestSuite) TestListTimeTrackingRecords() {
 	suite.Equal(http.StatusOK, res1.StatusCode)
 	suite.NotEqual("", res1.Body)
 
-	var records []timetracker.TimeTrackingRecord
+	var records []TimeTrackingRecord
 	suite.Nil(json.Unmarshal([]byte(res1.Body), &records))
 	suite.Len(records, 2)
 
@@ -87,7 +87,7 @@ func (suite *TimeTrackingRecordHandlerTestSuite) TestDeleteTimeTrackingRecords()
 	suite.Equal(http.StatusOK, res1.StatusCode)
 	suite.NotEqual("", res1.Body)
 
-	var records []timetracker.TimeTrackingRecord
+	var records []TimeTrackingRecord
 	suite.Nil(json.Unmarshal([]byte(res1.Body), &records))
 	suite.Len(records, 2)
 
@@ -98,7 +98,7 @@ func (suite *TimeTrackingRecordHandlerTestSuite) TestDeleteTimeTrackingRecords()
 	suite.Equal(http.StatusOK, res1_1.StatusCode)
 	suite.NotEqual("", res1_1.Body)
 
-	var records1_1 []timetracker.TimeTrackingRecord
+	var records1_1 []TimeTrackingRecord
 	suite.Nil(json.Unmarshal([]byte(res1_1.Body), &records1_1))
 	suite.Len(records1_1, 2)
 
@@ -113,7 +113,7 @@ func (suite *TimeTrackingRecordHandlerTestSuite) TestDeleteTimeTrackingRecords()
 	suite.Equal(http.StatusOK, res2_1.StatusCode)
 	suite.NotEqual("", res2_1.Body)
 
-	var records2 []timetracker.TimeTrackingRecord
+	var records2 []TimeTrackingRecord
 	suite.Nil(json.Unmarshal([]byte(res2_1.Body), &records2))
 	suite.Len(records2, 1)
 }

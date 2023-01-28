@@ -57,8 +57,8 @@ func toTimeTrackingRecordType(clickType IotClickType) timetracker.RecordType {
 }
 
 // ToTimeTrackingRecord try to convert passed request body to a time tracking record.
-func toTimeTrackingRecord(requestBody string) (TimeTrackingRecord, error) {
-	var timeTrackingRecord TimeTrackingRecord
+func toTimeTrackingRecord(requestBody string) (TimeTrackingCapture, error) {
+	var timeTrackingRecord TimeTrackingCapture
 	err := json.Unmarshal([]byte(requestBody), &timeTrackingRecord)
 	return timeTrackingRecord, err
 }

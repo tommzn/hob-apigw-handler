@@ -53,8 +53,8 @@ type TimeTrackingRecordHandler struct {
 	timeTracker         timetracker.TimeTracker
 }
 
-// TimeTrackingReport os a single captured time tracking event.
-type TimeTrackingRecord struct {
+// TimeTrackingCapture os a single captured time tracking event.
+type TimeTrackingCapture struct {
 
 	// DeviceId is an identifier of a device which captures a time tracking record.
 	DeviceId string `json:"deviceid"`
@@ -64,6 +64,22 @@ type TimeTrackingRecord struct {
 
 	// Timestamp is the point in time a time tracking event has occured.
 	Timestamp *APITime `json:"timestamp,omitempty"`
+}
+
+// TimeTrackingReport os a single captured time tracking event.
+type TimeTrackingRecord struct {
+
+	// Key is an unique identifier of a time tracking record.
+	Key string
+
+	// DeviceId is an identifier of a device which captures a time tracking record.
+	DeviceId string
+
+	// Type of a time tracking event.
+	Type timetracker.RecordType
+
+	// Timestamp is the point in time a time tracking event has occurred.
+	Timestamp *APITime
 }
 
 // ReportGenerateRequest is used to triiger report generation for a specific year and month.

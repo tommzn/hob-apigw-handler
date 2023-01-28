@@ -22,7 +22,7 @@ func TestHandlerTestSuite(t *testing.T) {
 func (suite *HandlerTestSuite) TestProcessRequests() {
 
 	handler := handlerForTest()
-	record := TimeTrackingRecord{DeviceId: "Device01", ClickType: SINGLE_CLICK}
+	record := TimeTrackingCapture{DeviceId: "Device01", ClickType: SINGLE_CLICK}
 
 	res1, err1 := handler.Process(suite.requestForTest(record))
 	suite.Nil(err1)
@@ -42,7 +42,7 @@ func (suite *HandlerTestSuite) TestConvertClickType() {
 	suite.Equal(timetracker.VACATION, toTimeTrackingRecordType(LONG_PRESS))
 }
 
-func (suite *HandlerTestSuite) requestForTest(record TimeTrackingRecord) events.APIGatewayProxyRequest {
+func (suite *HandlerTestSuite) requestForTest(record TimeTrackingCapture) events.APIGatewayProxyRequest {
 	content, err := json.Marshal(record)
 	suite.Nil(err)
 	return events.APIGatewayProxyRequest{Body: string(content)}
